@@ -4,7 +4,7 @@
       <h4>{{ products[누른거].title }}</h4>
       <img :src="products[누른거].image" style="width: 100%" />
       <p>{{ products[누른거].content }}</p>
-      <input @input="month = $event.target.value" />
+      <input v-model="month" />
       <p>
         {{ month }}개월 선택함 :
         {{ (products[누른거].price * month).toLocaleString() }}
@@ -21,6 +21,14 @@ export default {
     return {
       month: 1,
     };
+  },
+  watch: {
+    month(monthData) {
+      if (isNaN(monthData) === true) {
+        alert("숫자로 입력하세요");
+        this.month = 1;
+      }
+    },
   },
   props: {
     products: Array,
