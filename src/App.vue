@@ -1,8 +1,8 @@
 <template>
   <div class="black-bg" v-if="isModal">
     <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
+      <h4>{{ products[누른거].title }}</h4>
+      <p>{{ products[누른거].content }}</p>
       <button @click="handleCloseModal">닫기</button>
     </div>
   </div>
@@ -10,7 +10,7 @@
     <a v-for="menu in menus" :key="menu">{{ menu }}</a>
   </div>
   <div v-for="(product, i) in products" :key="product">
-    <h4 :style="style" @click="handleOpenModal">{{ product.title }}</h4>
+    <h4 :style="style" @click="handleOpenModal(i)">{{ product.title }}</h4>
     <img :src="product.image" class="room-img" />
     <p>{{ product.price }}</p>
     <button @click="increase(i)">허위매물 신고</button><br />
@@ -19,12 +19,13 @@
 </template>
 
 <script>
-import oneRoom from "./oneRoom";
+import oneRoom from "./assets/oneRoom";
 
 export default {
   name: "App",
   data() {
     return {
+      누른거: 0, // 사용자가 누른 상품번호 0번째 상품 누르면 0, 1번째 상품 누르면 1
       products: oneRoom,
       isModal: false,
       style: "color:red",
@@ -36,8 +37,9 @@ export default {
     increase(index) {
       this.신고수[index] += 1;
     },
-    handleOpenModal() {
+    handleOpenModal(index) {
       this.isModal = true;
+      this.누른거 = index;
     },
     handleCloseModal() {
       this.isModal = false;
