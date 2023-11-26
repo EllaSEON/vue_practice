@@ -1,25 +1,31 @@
 <template>
-  <div class="black-bg" v-if="isModal">
-    <div class="white-bg">
-      <h4>{{ products[누른거].title }}</h4>
-      <p>{{ products[누른거].content }}</p>
-      <button @click="handleCloseModal">닫기</button>
-    </div>
-  </div>
+  <info-modal
+    :products="products"
+    :누른거="누른거"
+    :isModal="isModal"
+    :handle-close-modal="handleCloseModal"
+  />
   <div class="menu">
     <a v-for="menu in menus" :key="menu">{{ menu }}</a>
   </div>
-  <div v-for="(product, i) in products" :key="product">
-    <h4 :style="style" @click="handleOpenModal(i)">{{ product.title }}</h4>
-    <img :src="product.image" class="room-img" />
-    <p>{{ product.price }}</p>
-    <button @click="increase(i)">허위매물 신고</button><br />
-    <span>신고수 : {{ 신고수[i] }}</span>
-  </div>
+  <shop-discount />
+  <product-card
+    v-for="(product, i) in products"
+    :key="product.id"
+    :index="i"
+    :product="product"
+    :신고수="신고수"
+    :handleIncrease="handleIncrease"
+    :handleOpenModal="handleOpenModal"
+    :style="style"
+  />
 </template>
 
 <script>
 import oneRoom from "./assets/oneRoom";
+import ShopDiscount from "./components/ShopDiscount.vue";
+import InfoModal from "./components/InfoModal.vue";
+import ProductCard from "./components/ProductCard.vue";
 
 export default {
   name: "App",
@@ -34,7 +40,7 @@ export default {
     };
   },
   methods: {
-    increase(index) {
+    handleIncrease(index) {
       this.신고수[index] += 1;
     },
     handleOpenModal(index) {
@@ -45,6 +51,7 @@ export default {
       this.isModal = false;
     },
   },
+  components: { ShopDiscount, InfoModal, ProductCard },
 };
 </script>
 
@@ -63,19 +70,7 @@ body {
 div {
   box-sizing: border-box;
 }
-.black-bg {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  padding: 20px;
-}
-.white-bg {
-  width: 100%;
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-}
+
 .menu {
   background: darkslateblue;
   padding: 15px;
@@ -84,10 +79,5 @@ div {
 .menu a {
   color: white;
   padding: 10px;
-}
-
-.room-img {
-  width: 100%;
-  margin-top: 40px;
 }
 </style>
