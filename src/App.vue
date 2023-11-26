@@ -3,7 +3,7 @@
     :products="products"
     :누른거="누른거"
     :isModal="isModal"
-    :handle-close-modal="handleCloseModal"
+    @handleCloseModal="handleCloseModal"
   />
   <div class="menu">
     <a v-for="menu in menus" :key="menu">{{ menu }}</a>
@@ -15,8 +15,8 @@
     :index="i"
     :product="product"
     :신고수="신고수"
-    :handleIncrease="handleIncrease"
-    :handleOpenModal="handleOpenModal"
+    @handleIncrease="handleIncrease"
+    @handleOpenModal="handleOpenModal"
     :style="style"
   />
 </template>

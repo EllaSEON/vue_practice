@@ -4,8 +4,12 @@
       <h4>{{ products[누른거].title }}</h4>
       <img :src="products[누른거].image" style="width: 100%" />
       <p>{{ products[누른거].content }}</p>
-      <p>{{ products[누른거].price.toLocaleString() }}</p>
-      <button @click="handleCloseModal">닫기</button>
+      <input @input="month = $event.target.value" />
+      <p>
+        {{ month }}개월 선택함 :
+        {{ (products[누른거].price * month).toLocaleString() }}
+      </p>
+      <button @click="$emit('handleCloseModal')">닫기</button>
     </div>
   </div>
 </template>
@@ -13,12 +17,18 @@
 <script>
 export default {
   name: "InfoModal",
+  data() {
+    return {
+      month: 1,
+    };
+  },
   props: {
     products: Array,
     누른거: Number,
     isModal: Boolean,
     handleCloseModal: Function,
   },
+  emits: ["handleCloseModal"],
 };
 </script>
 

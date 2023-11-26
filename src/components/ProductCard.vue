@@ -1,8 +1,10 @@
 <template>
-  <h4 :style="style" @click="handleOpenModal(index)">{{ product.title }}</h4>
+  <h4 :style="style" @click="$emit('handleOpenModal', index)">
+    {{ product.title }}
+  </h4>
   <img :src="product.image" class="room-img" />
   <p>{{ product.price }}</p>
-  <button @click="handleIncrease(index)">허위매물 신고</button><br />
+  <button @click="$emit('handleIncrease', index)">허위매물 신고</button><br />
   <span>신고수 : {{ 신고수[index] }}</span>
 </template>
 
@@ -17,6 +19,7 @@ export default {
     handleIncrease: Function,
     index: Number,
   },
+  emits: ["handleOpenModal", "handleIncrease"],
 };
 </script>
 
